@@ -1,62 +1,31 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Assistant IA_NMESG</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #0d0d0d;
-            color: #f0f0f0;
-            text-align: center;
-            padding: 40px;
-        }
-        h1 {
-            color: #00d9ff;
-            font-size: 36px;
-        }
-        p {
-            color: #bbb;
-        }
-        a.button {
-            display: inline-block;
-            margin: 20px;
-            padding: 15px 30px;
-            background: linear-gradient(45deg, #00d9ff, #9b00ff);
-            color: white;
-            text-decoration: none;
-            font-size: 18px;
-            border-radius: 8px;
-        }
-        a.button:hover {
-            opacity: 0.85;
-        }
-        img.logo {
-            width: 200px;
-            margin-top: 20px;
-        }
-        img.qr {
-            margin-top: 40px;
-            width: 180px;
-        }
-        footer {
-            margin-top: 50px;
-            font-size: 14px;
-            color: #666;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>IA_NETMSG Chat</title>
+  <style>
+    body { background: #101015; color: white; font-family: Arial, sans-serif; padding: 2rem; }
+    input, button { padding: 0.5rem; font-size: 1rem; }
+    .response { margin-top: 1rem; color: #80d0ff; }
+  </style>
 </head>
 <body>
-    <img src="logo_netsecurepro.png" alt="Logo NetSecurePro" class="logo">
-    <h1>Assistant IA_NMESG</h1>
-    <p>Une création de NetSecurePro – Votre plateforme IA de confiance.</p>
-    <a class="button" href="https://chatgpt.com/s/m_6811afdd0a1481919ef676d63c4e98a4" target="_blank">Lancer l’Assistant IA</a>
-    <a class="button" href="IA_NMESG_OFFICIEL.apk" download>Télécharger l'application Android</a>
-    <div>
-        <img src="QR_IA_NMESG_SITE.png" alt="QR Code IA" class="qr">
-    </div>
-    <footer>
-        © 2025 NetSecurePro — Site : <a href="https://netsecurepro.square.site" style="color:#00d9ff;">netsecurepro.square.site</a>
-    </footer>
+  <h1>IA_NETMSG - Assistant Local</h1>
+  <input type="text" id="user-input" placeholder="Posez une question...">
+  <button onclick="sendMessage()">Envoyer</button>
+  <p class="response" id="ia-response"></p>
+
+  <script>
+    async function sendMessage() {
+      const msg = document.getElementById("user-input").value;
+      const res = await fetch('http://localhost:5000/ask', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: msg })
+      });
+      const data = await res.json();
+      document.getElementById("ia-response").innerText = data.response;
+    }
+  </script>
 </body>
 </html>
