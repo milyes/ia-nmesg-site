@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Mini Terminal IA Web</title>
+  <style>
+    body { background-color: #000; color: #0f0; font-family: monospace; padding: 10px; }
+    #output { white-space: pre-wrap; height: 300px; overflow-y: scroll; border: 1px solid #0f0; padding: 10px; margin-bottom: 10px; }
+    #input { width: 100%; background: #111; color: #0f0; border: 1px solid #0f0; padding: 5px; }
+  </style>
+</head>
+<body>
+  <h2>Mini Terminal IA Web</h2>
+  <div id="output">Bienvenue dans le terminal IA web. Tapez une commande.</div>
+  <input id="input" type="text" placeholder="Commande..." onkeydown="handleKey(event)">
+  
+  <script>
+    const output = document.getElementById("output");
+    const input = document.getElementById("input");
+
+    function handleKey(e) {
+      if (e.key === "Enter") {
+        const cmd = input.value.trim();
+        output.innerText += "\n> " + cmd;
+        input.value = "";
+
+        // Simuler quelques commandes
+        if (cmd === "ls") {
+          output.innerText += "\nmini_terminal_avance.py\ndetect_ip.html";
+        } else if (cmd === "whoami") {
+          output.innerText += "\nutilisateur_ia";
+        } else if (cmd === "clear") {
+          output.innerText = "Terminal nettoyé.";
+        } else {
+          output.innerText += "\nCommande non reconnue.";
+        }
+        output.scrollTop = output.scrollHeight;
+      }
+    }
+  </script>
+</body>
+</html>
