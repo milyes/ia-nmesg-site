@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IA22 LOGIC BROWSER</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>🧠 IA22 LOGIC BROWSER</h1>
+    <p>Interface cognitive immersive pour IA22 LOGIC OS</p>
+  </header>
+
+  <main>
+    <section id="command-section">
+      <h2>💬 Entrée Logique</h2>
+      <input type="text" id="userCommand" placeholder="Tape ta commande IA ici..." />
+      <button onclick="sendCommand()">Exécuter</button>
+    </section>
+
+    <section id="response-section">
+      <h2>📡 Réponse IA</h2>
+      <div id="responseBox">...</div>
+    </section>
+
+    <section id="modules-section">
+      <h2>🧩 Modules Dynamiques</h2>
+      <div id="modules">
+        <button onclick="loadModule('vision')">Vision IA</button>
+        <button onclick="loadModule('configurator')">Personnalité IA</button>
+        <button onclick="loadModule('security')">Sécurité</button>
+        <button onclick="loadModule('voice_module')">Interaction Vocale</button>
+      </div>
+      <div id="moduleContent"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>🛡️ IA22 SYSTEM Fusion — Édition Montréal</p>
+  </footer>
+
+  <script src="ia22_neuro.js"></script>
+  <script>
+    function sendCommand() {
+      const command = document.getElementById("userCommand").value;
+      fetch("/evaluate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ input: command })
+      })
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("responseBox").innerText = data.output;
+      });
+    }
+
+    function loadModule(name) {
+      fetch(`modules/${name}.js`)
+        .then(res => res.text())
+        .then(script => {
+          const moduleDiv = document.getElementById("moduleContent");
+          moduleDiv.innerHTML = `<pre>${script}</pre>`;
+        });
+    }
+  </script>
+</body>
+</html>msg.html
